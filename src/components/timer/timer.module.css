@@ -21,6 +21,7 @@
 
 .timerCount {
   font-size: 200%;
+  font-family: monospace;
 }
 
 button {
