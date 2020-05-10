@@ -29,13 +29,13 @@ button {
   padding: 0.3em 1em;
   border-radius: 0.25em;
   border: none;
-  background-color: #c2a4e1;
-  color: #34016d;
+  background-color: #f5c0ab;
+  color: #c45124;
   cursor: pointer;
 }
 
 button:hover:not(:disabled) {
-  background-color: #a787c7;
+  background-color: #edae95;
 }
 button:disabled {
   color: #aa6af1;
