@@ -1,0 +1,45 @@
+.timerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.goalInput {
+  font-size: 100%;
+  margin-block-start: 0.4em;
+  padding: 0.2em 0.4em;
+}
+
+.timerSettings > input {
+  font-size: 100%;
+  padding: 0.2em 0.4em;
+}
+
+.timerWrapper > * + * {
+  margin-block-start: 1em;
+}
+
+.timerCount {
+  font-size: 200%;
+}
+
+button {
+  font-size: 100%;
+  padding: 0.3em 1em;
+  border-radius: 0.25em;
+  border: none;
+  background-color: #c2a4e1;
+  color: #34016d;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background-color: #a787c7;
+}
+button:disabled {
+  color: #aa6af1;
+}
+
+button + button {
+  margin-inline-start: 1em;
+}
