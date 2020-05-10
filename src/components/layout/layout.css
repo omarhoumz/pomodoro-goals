@@ -1,0 +1,58 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+html {
+  font: 112.5%/1.45em georgia, serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen;
+  box-sizing: border-box;
+}
+body {
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen;
+  background-color: #2b2b2b;
+  color: wheat;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+a {
+  color: #aa62f3;
+  text-decoration: none;
+  padding-block-end: 2px;
+  border-block-end: 2px solid transparent;
+}
+a:hover {
+  border-block-end-color: inherit;
+}
+
+#___gatsby > div {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+#___gatsby > div > main {
+  flex-grow: 1;
+}
+
+.container {
+  width: 100%;
+  max-width: 980px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: 100%;
+  }
+}

@@ -1,0 +1,12 @@
+.header {
+  background: rebeccapurple;
+}
+
+.header > div {
+  padding: 1.45rem 1.0875rem;
+}
+
+.header a {
+  border: none;
+  padding: 0;
+}
