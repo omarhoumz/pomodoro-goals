@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useState, useMemo } from 'react'
 
 import createTimer from './create-timer'
 import styles from './timer.module.css'
@@ -11,14 +11,18 @@ const SettingInput = memo(function SettingInput({
   max = 99,
 }) {
   return (
-    <input
-      type='number'
-      min={min}
-      max={max}
-      value={value}
-      name={name}
-      onChange={onChange}
-    />
+    <>
+      <label htmlFor={name}>{name}</label>
+      <input
+        type='number'
+        min={min}
+        max={max}
+        value={value}
+        name={name}
+        id={name}
+        onChange={onChange}
+      />
+    </>
   )
 })
 
@@ -31,7 +35,7 @@ const initialTimerSettings = {
 const Timer = memo(function Timer() {
   const [timer, setTimer] = useState(null)
   const [timeFormatted, setTimeFormatted] = useState('00:00:00')
-  const [goal, setGoal] = useState('This is a goal')
+  const [goal, setGoal] = useState('')
   const [timerState, setTimerState] = useState('IDLE')
   const [timerSettings, setTimerSettings] = useState({
     hours: 0,
@@ -39,8 +43,16 @@ const Timer = memo(function Timer() {
     seconds: 0,
   })
 
+  const isTimerSettingsNonZero = useMemo(
+    () => !Object.values(timerSettings).some((setting) => setting !== 0),
+    [timerSettings]
+  )
+
   function handleStart() {
     setTimeFormatted('00:00:00')
+    if (isTimerSettingsNonZero) {
+      return null
+    }
     const timer = createTimer(
       timerSettings,
       function () {
@@ -68,6 +80,12 @@ const Timer = memo(function Timer() {
     setTimerState('RUNNING')
   }
 
+  function handleStop() {
+    timer.stop()
+    setTimer(null)
+    setTimerState('IDLE')
+  }
+
   function handleSettingsChange(e) {
     const value = e.currentTarget.value
     const name = e.currentTarget.name
@@ -76,9 +94,7 @@ const Timer = memo(function Timer() {
   }
 
   return (
-    <div className={styles.timerWrapper}>
-      <h1>Timer</h1>
-
+    <div className={styles.timerComponentWrapper}>
       <label htmlFor='goal'>
         <div>My goal:</div>
         <input
@@ -91,42 +107,46 @@ const Timer = memo(function Timer() {
         />
       </label>
 
-      {timerState === 'IDLE' ? (
-        <div className={styles.timerSettings}>
-          {['hours', 'minutes', 'seconds'].map((thing) => {
-            return (
-              <SettingInput
-                value={timerSettings[thing]}
-                name={thing}
-                onChange={handleSettingsChange}
-              />
-            )
-          })}
-        </div>
-      ) : (
-        <div className={styles.timerCount}>{timeFormatted}</div>
-      )}
-
-      <div className='actionsWrapper'>
+      <div className={styles.timerWrapper}>
         {timerState === 'IDLE' ? (
-          <button type='button' onClick={handleStart}>
+          <div className={styles.timerSettings}>
+            {['hours', 'minutes', 'seconds'].map((thing, index) => {
+              return (
+                <>
+                  <SettingInput
+                    value={timerSettings[thing]}
+                    name={thing}
+                    onChange={handleSettingsChange}
+                  />
+                  {index < 2 && <span className={styles.colon}>:</span>}
+                </>
+              )
+            })}
+          </div>
+        ) : (
+          <div className={styles.timerCount}>{timeFormatted}</div>
+        )}
+      </div>
+
+      <div className={styles.actionsWrapper}>
+        {timerState === 'IDLE' ? (
+          <button
+            type='button'
+            onClick={handleStart}
+            disabled={isTimerSettingsNonZero}
+          >
             Start
           </button>
         ) : (
           <>
             <button
               type='button'
-              onClick={handlePause}
-              disabled={timerState === 'PAUSED'}
+              onClick={timerState === 'PAUSED' ? handleResume : handlePause}
             >
-              Pause
+              {timerState === 'PAUSED' ? 'Resume' : 'Pause'}
             </button>
-            <button
-              type='button'
-              onClick={handleResume}
-              disabled={timerState === 'RUNNING'}
-            >
-              Resume
+            <button type='button' onClick={handleStop}>
+              Stop
             </button>
           </>
         )}

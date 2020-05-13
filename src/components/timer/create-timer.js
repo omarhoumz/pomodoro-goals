@@ -42,6 +42,13 @@ function createTimer(time, oncomplete, onStep) {
       const granularity = 250
       timer = setInterval(step, granularity)
       isPaused = false
+
+      const now = delay - (Date.now() - startTime)
+      const timeObject = getTime(now)
+
+      if (typeof onStep === 'function') {
+        onStep(Object.values(timeObject).join(':'), timeObject)
+      }
     }
   }
 
@@ -49,7 +56,7 @@ function createTimer(time, oncomplete, onStep) {
     if (isPaused) {
       return
     }
-    delay = delay - (Date.now() - startTime)
+    delay -= Date.now() - startTime
     isPaused = true
     clearInterval(timer)
   }
@@ -58,7 +65,9 @@ function createTimer(time, oncomplete, onStep) {
     const now = delay - (Date.now() - startTime)
     const timeObject = getTime(now)
 
-    onStep(Object.values(timeObject).join(':'), timeObject)
+    if (typeof onStep === 'function') {
+      onStep(Object.values(timeObject).join(':'), timeObject)
+    }
 
     if (now <= 0) {
       clearInterval(timer)
@@ -72,10 +81,17 @@ function createTimer(time, oncomplete, onStep) {
     resume()
   }
 
+  const stop = function () {
+    delay = 0
+    isPaused = true
+    clearInterval(timer)
+  }
+
   return {
     start,
     resume,
     pause,
+    stop,
   }
 }
 
