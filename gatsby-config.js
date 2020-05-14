@@ -21,8 +21,8 @@ module.exports = {
         name: `Pomodoro Goals`,
         short_name: `Pomodoro`,
         start_url: `/`,
-        background_color: `#f76d36`,
-        theme_color: `#f76d36`,
+        background_color: `#c45124`,
+        theme_color: `#c45124`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
