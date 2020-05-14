@@ -8,9 +8,7 @@ const Header = ({ siteTitle }) => (
   <header className={styles.header}>
     <div className='container'>
       <h1>
-        <Link to='/' style={{ color: 'white' }}>
-          {siteTitle}
-        </Link>
+        <Link to='/'>{siteTitle}</Link>
       </h1>
     </div>
   </header>

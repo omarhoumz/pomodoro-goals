@@ -1,12 +1,16 @@
 .header {
-  background: #c45124;
+  font-size: 1.2em;
 }
 
 .header > div {
-  padding: 1.45rem 1.0875rem;
+  padding: 1.4rem 1.0875rem;
 }
 
 .header a {
   border: none;
   padding: 0;
+}
+
+.header h1 {
+  font-size: inherit;
 }

@@ -6,7 +6,7 @@ import Header from '../header/header'
 import './layout.css'
 import Footer from '../footer/footer'
 
-const Layout = ({ children }) => {
+const Layout = ({ children, mainClasses }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -20,14 +20,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <main
-        className='container'
-        style={{
-          padding: '1.5rem 1rem',
-        }}
-      >
-        {children}
-      </main>
+      <main className={['container', mainClasses].join(' ')}>{children}</main>
       <Footer />
     </>
   )

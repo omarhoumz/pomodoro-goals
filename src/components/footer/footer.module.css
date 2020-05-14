@@ -1,6 +1,6 @@
 .footer {
   padding: 1.5rem 1rem;
-  font-size: 80%;
+  font-size: 0.63em;
 
   display: flex;
   justify-content: space-between;
@@ -10,4 +10,8 @@
 
 .footer p {
   margin: 0;
+}
+
+.footer a {
+  color: var(--orange-400);
 }

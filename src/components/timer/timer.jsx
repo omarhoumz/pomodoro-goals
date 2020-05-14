@@ -1,6 +1,8 @@
 import React, { memo, useState, useMemo } from 'react'
 
 import createTimer from './create-timer'
+import SEO from '../seo'
+import Layout from '../layout/layout'
 import styles from './timer.module.css'
 
 const SettingInput = memo(function SettingInput({
@@ -94,64 +96,68 @@ const Timer = memo(function Timer() {
   }
 
   return (
-    <div className={styles.timerComponentWrapper}>
-      <label htmlFor='goal'>
-        <div>My goal:</div>
-        <input
-          type='text'
-          id='goal'
-          value={goal}
-          onChange={(e) => setGoal(e.currentTarget.value)}
-          readOnly={timerState !== 'IDLE'}
-          className={styles.goalInput}
-        />
-      </label>
+    <Layout mainClasses={styles.mainContent}>
+      <div className={styles.timerComponentWrapper}>
+        <SEO title='Home' />
 
-      <div className={styles.timerWrapper}>
-        {timerState === 'IDLE' ? (
-          <div className={styles.timerSettings}>
-            {['hours', 'minutes', 'seconds'].map((thing, index) => {
-              return (
-                <>
-                  <SettingInput
-                    value={timerSettings[thing]}
-                    name={thing}
-                    onChange={handleSettingsChange}
-                  />
-                  {index < 2 && <span className={styles.colon}>:</span>}
-                </>
-              )
-            })}
-          </div>
-        ) : (
-          <div className={styles.timerCount}>{timeFormatted}</div>
-        )}
-      </div>
+        <label htmlFor='goal'>
+          <div>My goal:</div>
+          <input
+            type='text'
+            id='goal'
+            value={goal}
+            onChange={(e) => setGoal(e.currentTarget.value)}
+            readOnly={timerState !== 'IDLE'}
+            className={styles.goalInput}
+          />
+        </label>
 
-      <div className={styles.actionsWrapper}>
-        {timerState === 'IDLE' ? (
-          <button
-            type='button'
-            onClick={handleStart}
-            disabled={isTimerSettingsNonZero}
-          >
-            Start
-          </button>
-        ) : (
-          <>
+        <div className={styles.timerWrapper}>
+          {timerState === 'IDLE' ? (
+            <div className={styles.timerSettings}>
+              {['hours', 'minutes', 'seconds'].map((thing, index) => {
+                return (
+                  <>
+                    <SettingInput
+                      value={timerSettings[thing]}
+                      name={thing}
+                      onChange={handleSettingsChange}
+                    />
+                    {index < 2 && <span className={styles.colon}>:</span>}
+                  </>
+                )
+              })}
+            </div>
+          ) : (
+            <div className={styles.timerCount}>{timeFormatted}</div>
+          )}
+        </div>
+
+        <div className={styles.actionsWrapper}>
+          {timerState === 'IDLE' ? (
             <button
               type='button'
-              onClick={timerState === 'PAUSED' ? handleResume : handlePause}
+              onClick={handleStart}
+              disabled={isTimerSettingsNonZero}
             >
-              {timerState === 'PAUSED' ? 'Resume' : 'Pause'}
+              Start
             </button>
-            <button type='button' onClick={handleStop}>
-              Stop
-            </button>
-          </>
-        )}
+          ) : (
+            <>
+              <button
+                type='button'
+                onClick={timerState === 'PAUSED' ? handleResume : handlePause}
+              >
+                {timerState === 'PAUSED' ? 'Resume' : 'Pause'}
+              </button>
+              <button type='button' onClick={handleStop}>
+                Stop
+              </button>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </Layout>
   )
 })
 
