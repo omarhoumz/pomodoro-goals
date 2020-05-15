@@ -32,7 +32,7 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "serve:functions": "cd ./functions && npm run serve",
     "deploy:functions": "cd ./functions && npm run deploy",
-    "start": "yarn develop",
+    "start": "(cd functions && npm run serve) & yarn develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
