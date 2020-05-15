@@ -1,9 +1,14 @@
-import React, { memo, useState, useMemo } from 'react'
+import React, { memo, useState, useMemo, useEffect } from 'react'
 
 import createTimer from './create-timer'
 import SEO from '../seo'
 import Layout from '../layout/layout'
 import styles from './timer.module.css'
+
+const functionUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://us-central1-pomodoro-goals.cloudfunctions.net/helloWorld/'
+    : 'http://localhost:5001/pomodoro-goals/us-central1/helloWorld/'
 
 const SettingInput = memo(function SettingInput({
   onChange,
@@ -95,6 +100,14 @@ const Timer = memo(function Timer() {
     setTimerSettings((prev) => ({ ...prev, [name]: value }))
   }
 
+  useEffect(() => {
+    fetch(functionUrl)
+      .then((d) => d.json())
+      .then((res) => {
+        console.log(res)
+      })
+  }, [])
+
   return (
     <Layout mainClasses={styles.mainContent}>
       <div className={styles.timerComponentWrapper}>
@@ -117,14 +130,14 @@ const Timer = memo(function Timer() {
             <div className={styles.timerSettings}>
               {['hours', 'minutes', 'seconds'].map((thing, index) => {
                 return (
-                  <>
+                  <React.Fragment key={index.toString()}>
                     <SettingInput
                       value={timerSettings[thing]}
                       name={thing}
                       onChange={handleSettingsChange}
                     />
                     {index < 2 && <span className={styles.colon}>:</span>}
-                  </>
+                  </React.Fragment>
                 )
               })}
             </div>
