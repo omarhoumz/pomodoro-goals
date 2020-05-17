@@ -7,8 +7,8 @@ import styles from './timer.module.css'
 
 const functionUrl =
   process.env.NODE_ENV === 'production'
-    ? 'https://us-central1-pomodoro-goals.cloudfunctions.net/helloWorld/'
-    : 'http://localhost:5001/pomodoro-goals/us-central1/helloWorld/'
+    ? 'https://us-central1-pomodoro-goals.cloudfunctions.net/helloWorld'
+    : 'http://localhost:5001/pomodoro-goals/us-central1/helloWorld'
 
 const SettingInput = memo(function SettingInput({
   onChange,
