@@ -18,21 +18,21 @@ app.use(cors(corsOptions))
 app.get('/', (req, res) =>
   res.json({
     message: 'hello from pomodoro',
-    status: 200,
+    status: 2000,
   })
 )
 
 app.get('/name/:name', (req, res) =>
   res.json({
     message: `Hello, ${req.params.name}!`,
-    status: 200,
+    status: 2000,
   })
 )
 
 app.get('/name', (req, res) =>
   res.json({
     message: `Hello!`,
-    status: 200,
+    status: 2000,
   })
 )
 
