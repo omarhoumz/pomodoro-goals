@@ -101,12 +101,19 @@ const Timer = memo(function Timer() {
   }
 
   useEffect(() => {
-    fetch(functionUrl)
+    fetch(`${functionUrl}/createIssue`, {
+      method: 'POST',
+      body: JSON.stringify({
+        label: 'Implement design',
+        estimation: '2',
+        starts: '12/12/2020',
+      }),
+    })
       .then((d) => d.json())
       .then((res) => {
         console.log(res)
       })
-  }, [])
+  }, [timerState])
 
   return (
     <Layout mainClasses={styles.mainContent}>
