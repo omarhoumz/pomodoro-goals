@@ -1,4 +1,16 @@
 const functions = require('firebase-functions')
+const admin = require('firebase-admin')
+
+if (process.env.NODE_ENV === 'production') {
+  admin.initializeApp()
+} else {
+  const serviceAccount = require('./fireb-adminsdk.json')
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://pomodoro-goals.firebaseio.com',
+  })
+}
 
 const express = require('express')
 const cors = require('cors')
@@ -14,6 +26,19 @@ const corsOptions =
     : { origin: true }
 
 app.use(cors(corsOptions))
+
+app.post('/createIssue', (req, res) => {
+  const { label, estimation, starts } = JSON.parse(req.body)
+  console.log({ label, estimation, starts })
+
+  admin.firestore().collection('messages').add({ label, estimation, starts })
+
+  res.json({
+    status: 2000,
+    message: 'issue created',
+    issue: { label, estimation, starts },
+  })
+})
 
 app.get('/', (req, res) =>
   res.json({
